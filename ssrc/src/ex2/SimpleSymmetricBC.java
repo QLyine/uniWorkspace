@@ -49,7 +49,7 @@ public class SimpleSymmetricBC {
 
 		// byte[] input = "1234567890123456".getBytes();
 
-		byte[] input = new byte[64];
+		byte[] input = new byte[32];
 		byte[] txt = "ola".getBytes();
 		for (int i = 0; i < txt.length; i++)
 			input[i] = txt[i];

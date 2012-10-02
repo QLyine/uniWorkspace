@@ -143,7 +143,7 @@ public final class TFTP_Enc
             // Try to open local file for writing
             try
             {
-                output = new FileOutputStream(file);
+                output = new myFileOutputStream(file);
             }
             catch (IOException e)
             {
@@ -156,7 +156,7 @@ public final class TFTP_Enc
             // Try to receive remote file via TFTP
             try
             {
-                tftp.receiveFile(remoteFilename, transferMode, output, hostname);
+                tftp.receiveFile(remoteFilename, transferMode, output, hostname, TFTPServer.DEFAULT_TFTP_PORT);
             }
             catch (UnknownHostException e)
             {
@@ -196,12 +196,12 @@ public final class TFTP_Enc
 
         } else {
             // We're sending a file
-            FileInputStream input = null;
+            myFileInputStream input = null;
 
             // Try to open local file for reading
             try
             {
-                input = new FileInputStream(localFilename);
+                input = new myFileInputStream(localFilename);
             }
             catch (IOException e)
             {
@@ -215,7 +215,8 @@ public final class TFTP_Enc
             try
             {
             	
-                tftp.sendFile(remoteFilename, transferMode, input, hostname);
+                tftp.sendFile(remoteFilename, transferMode, input, hostname, TFTPServer.DEFAULT_TFTP_PORT);
+
             }
             catch (UnknownHostException e)
             {
