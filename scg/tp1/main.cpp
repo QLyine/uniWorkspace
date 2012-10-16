@@ -161,6 +161,8 @@ slave(void)
 
     sendMsg(0, (char *) res.c_str());
 
+    if( buff != NULL )
+      free(buff);
     buff = getMsg(0);
     cmp = strcmp(buff, "-");
   }
