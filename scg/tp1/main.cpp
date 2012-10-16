@@ -7,12 +7,8 @@
 #include <map>
 #include <vector>
 #include <stdlib.h>
-#include <math.h>
 
 #define TAG 0
-#define WORKTAG 1
-#define DIETAG 2
-#define BUFSIZE 4
 
 using namespace std;
 
@@ -167,8 +163,6 @@ slave(void)
 
     buff = getMsg(0);
     cmp = strcmp(buff, "-");
-
-    free(buff);
   }
 
 }

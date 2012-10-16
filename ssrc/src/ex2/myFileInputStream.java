@@ -10,7 +10,7 @@ import javax.swing.text.html.MinimalHTMLWriter;
 
 public class myFileInputStream extends FileInputStream {
 
-	public static final int BOCK_SIZE = 16;
+	public static final int BOCK_SIZE = 512;
 	
 	public myFileInputStream(String name) throws FileNotFoundException {
 		super(name);
