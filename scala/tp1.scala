@@ -65,6 +65,11 @@ object MatrixOps {
     {
       _find(m, z, 0)
     }
+
+    def _make(f: (Int, Int) => Int, l: Int ) : Matrix  = Stream.cons(Stream.from(0) map ( f(l,_) ), _make(f, l+1))  
+    
+    def make (f : (Int, Int) => Int ): Matrix = _make(f,0)
+
 }
 
 object MatrixTests {
@@ -83,6 +88,8 @@ object MatrixTests {
   {
     m take i map ( _ take j ) 
   }
+
+  def sum(x: Int, y: Int) = x + y
 }
 
 import MatrixOps._
