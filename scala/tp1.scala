@@ -40,6 +40,26 @@ object MatrixOps {
     def add(a: Matrix, b: Matrix): Matrix = Stream.cons(addRow(a.head, b.head), add(a.tail, b.tail))
 
     def mult(m: Matrix, s: Int): Matrix = m map ( _ map ( _ * s) ) 
+    
+    def trans(m: Matrix): Matrix = Stream.cons(m map (_.head), trans(m map (_.tail) ) )  
+
+    def findInRow(r: Stream[(Int, Int)], z: Int) = 
+    {
+      r filter { case(x,v) => x == z } match 
+      {
+        case (x, v)#::xs => v
+        case empty => -1
+      }
+    }
+
+    def find(m: Matrix, z:Int) : (Int, Int) =
+    {
+      m.zipWithIndex.map({ case(x,v) => (x.zipWithIndex,v) }) filter { case(x,v) => findInRow(x,z) != -1 } match 
+      {
+        case ((_,j)#::xs,i) #:: xxs  => (i,j) 
+        case _ => (-1,-1)
+      }
+    }
 }
 
 object MatrixTests {
@@ -52,6 +72,11 @@ object MatrixTests {
   def print_n(m: Matrix, x:Int): Unit =
   {
     m take x foreach ( e => println( e take x print ) )
+  }
+
+  def transform_to_finite(m: Matrix, i: Int, j: Int): Matrix = 
+  {
+    m take i map ( _ take j ) 
   }
 }
 
