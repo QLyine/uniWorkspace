@@ -43,22 +43,27 @@ object MatrixOps {
     
     def trans(m: Matrix): Matrix = Stream.cons(m map (_.head), trans(m map (_.tail) ) )  
 
-    def findInRow(r: Stream[(Int, Int)], z: Int) = 
+    def findInRow(r: Row, z: Int): Int = 
     {
-      r filter { case(x,v) => x == z } match 
+      r.zipWithIndex filter { case (x,v) => x == z } match 
       {
-        case (x, v)#::xs => v
-        case empty => -1
+        case (xx,vv) #:: xs => xx
+        case _ => -1
       }
     }
 
-    def find(m: Matrix, z:Int) : (Int, Int) =
+    def _find(m: Matrix, z:Int, l: Int): (Int, Int) =
     {
-      m.zipWithIndex.map({ case(x,v) => (x.zipWithIndex,v) }) filter { case(x,v) => findInRow(x,z) != -1 } match 
+      m match 
       {
-        case ((_,j)#::xs,i) #:: xxs  => (i,j) 
+        case x #:: xs => lazy val a = findInRow(x, z); if( a != -1 ) (l, a) else _find(xs, z, l + 1)
         case _ => (-1,-1)
       }
+    }
+    
+    def find(m: Matrix, z:Int) : (Int, Int) =
+    {
+      _find(m, z, 0)
     }
 }
 
