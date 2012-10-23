@@ -116,17 +116,20 @@ master(void)
     }
     printf("->: Jobs sent %d \n", docsSent);
     printf("->: Number of docs to send  %d \n", (numberDocs - docsSent) );
+    int docsDoneA = docsDone;
     for(i=1;i<min(numprocs,(docsSent - docsDone)+1);i++)
     {
 
       buff = getMsg(i);
 
       printf("->: %s\n", buff);
-      docsDone ++;
+      docsDoneA ++;
       res.push_back( string(buff) );
       
       free(buff);
     }
+
+    docsDone = docsDoneA;
   }
 
 
@@ -180,11 +183,11 @@ process_results(string result)
 static string
 do_work(string work)
 {
-  	map<string,int> m;
+  map<string,int> m;
 	ifstream myReadFile;
-	char delims [] = "\",;:|/\\.!()?_ ";
+	char delims [] = "\",;:|/\\.!()?_ \n<>«»-#$%&/()=[]{}*+";
 
-	myReadFile.open("sample.txt"); //ler do argumento
+	myReadFile.open(work.c_str()); //ler do argumento
 	char output[100];
 
 	if(myReadFile.is_open())
@@ -195,11 +198,10 @@ do_work(string work)
 		{
 			myReadFile >> output;
 			char* res = strtok(output, delims);
-			last = string(res); //trafulhice
 			if(res != NULL && strlen(res) >= 3)
 			{
-				
 				string str(res);
+			  last = str; //trafulhice
 				m[str]++;
 			}
 		}
